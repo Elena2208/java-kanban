@@ -1,13 +1,16 @@
+package task;
+
 import java.util.Objects;
 
 public class Task {
 
+    public enum TaskStatus {NEW,IN_PROGRESS, DONE}
     private String title;
     private String description;
     private int idTask;
-    private String status;
+    private TaskStatus status;
 
-    public Task(int idTask, String title, String description, String status) {
+    public Task(int idTask, String title, String description, TaskStatus status) {
         this.title = title;
         this.description = description;
         this.idTask = idTask;
@@ -26,7 +29,7 @@ public class Task {
         return idTask;
     }
 
-    public String getStatus() {
+    public TaskStatus getStatus() {
         return status;
     }
 
@@ -61,7 +64,7 @@ public class Task {
         this.description = description;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(TaskStatus status) {
         this.status = status;
     }
 }

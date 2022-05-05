@@ -1,3 +1,5 @@
+package task;
+
 import java.util.ArrayList;
 import java.util.Objects;
 
@@ -7,12 +9,12 @@ public class Epic extends Task {
     private int counterDone;
     private int counterInProgress;
 
-    public Epic(int idTask, String title, String description, String status) {
+    public Epic(int idTask, String title, String description, TaskStatus status) {
         super(idTask, title, description, status);
         this.idSubtask = new ArrayList<>();
-        counterNew=0;
-        counterDone=0;
-        counterInProgress=0;
+        this.counterNew = 0;
+        this.counterDone = 0;
+        this.counterInProgress = 0;
     }
 
     public ArrayList<Integer> getIdSubtask() {
@@ -22,9 +24,8 @@ public class Epic extends Task {
 
     @Override
     public String toString() {
-        return  super.toString();
+        return super.toString();
     }
-
 
 
     @Override

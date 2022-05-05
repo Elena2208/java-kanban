@@ -1,38 +1,42 @@
+import task.Epic;
+import task.Subtask;
+import task.Task;
+
 public class Main {
 
     public static void main(String[] args) {
        TaskManager taskManager= new TaskManager();
        taskManager.createEpic(new Epic(TaskManager.getIdInc(), "Переезд","В другой город",
-               "NEW"));
+               Task.TaskStatus.NEW));
        taskManager.createTask(new Task(TaskManager.getIdInc(),"Поход в магазин",
-               "Купить продукты на неделю", "NEW"));
+               "Купить продукты на неделю", Task.TaskStatus.NEW));
         taskManager.createTask(new Task(TaskManager.getIdInc(),"Прогулка",
-                "Погулять с собакой ", "NEW"));
+                "Погулять с собакой ", Task.TaskStatus.NEW));
        taskManager.createSubtask(new Subtask(TaskManager.getIdInc(),"Найти фирму","Перевозка вещей",
-               "NEW",0));
+               Task.TaskStatus.NEW,0));
        taskManager.createSubtask(new Subtask(TaskManager.getIdInc(),"Упаковка","Запаковать вещи по коробкам",
-                "NEW",0));
+               Task.TaskStatus.NEW,0));
        taskManager.createEpic(new Epic(TaskManager.getIdInc(), "Врач","Стоматолог",
-                "NEW"));
+               Task.TaskStatus.NEW));
        taskManager.createSubtask(new Subtask(TaskManager.getIdInc(),"Записаться на прием",
-               "Позвонить во торник после 9.00","NEW",5));
+               "Позвонить во торник после 9.00",Task.TaskStatus.NEW,5));
        System.out.println(taskManager.getListEpic());
        System.out.println(taskManager.getListTask());
        System.out.println(taskManager.getListSubtask());
        taskManager.updateTask(2,new Task(TaskManager.getIdInc(),"Прогулка",
-        "Погулять с собакой ", "DONE"));
+        "Погулять с собакой ", Task.TaskStatus.DONE));
         System.out.println(taskManager.getListTask());
         taskManager.updateSubtask(4,new Subtask(TaskManager.getIdInc(),"Упаковка","Запаковать вещи по коробкам",
-               "DONE",0));
-        taskManager.deleteSubtaskId(3);
+                Task.TaskStatus.DONE,0));
+        taskManager.deleteSubtaskById(3);
 
         System.out.println(taskManager.getListSubtaskEpic(0));
         System.out.println(taskManager.getListEpic());
         taskManager.updateEpic(0,new Epic(TaskManager.getIdInc(), "Переезд","В другой город",
-                "DONE"));
+                Task.TaskStatus.DONE));
 
 
-        System.out.println(taskManager.getListEpic());
+
 
 
 
