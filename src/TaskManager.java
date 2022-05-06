@@ -1,6 +1,4 @@
-import task.Epic;
-import task.Subtask;
-import task.Task;
+import task.*;
 
 import java.util.*;
 
@@ -21,15 +19,15 @@ public class TaskManager {
     }
 
     public Map<Object, Object> getListTask() {
-        return (!mapTask.isEmpty()) ? new HashMap<>(mapTask) : Collections.emptyMap();
+        return mapTask.isEmpty() ? Collections.emptyMap() : new HashMap<>(mapTask);
     }
 
     public Map<Object, Object> getListEpic() {
-        return (!mapEpic.isEmpty()) ? new HashMap<>(mapEpic) : Collections.emptyMap();
+        return mapEpic.isEmpty() ? Collections.emptyMap() : new HashMap<>(mapEpic);
     }
 
     public Map<Object, Object> getListSubtask() {
-        return (!mapSubtask.isEmpty()) ? new HashMap<>(mapSubtask) : Collections.emptyMap();
+        return mapSubtask.isEmpty() ? Collections.emptyMap() : new HashMap<>(mapSubtask);
     }
 
     public void clearTask() {
@@ -37,10 +35,10 @@ public class TaskManager {
     }
 
     public void clearSubtask() {
-        for (int index : mapSubtask.keySet()) {
-            int idEpic = mapSubtask.get(index).getIdEpic();
-            if (mapEpic.get(idEpic).getIdSubtask().contains(mapSubtask.get(index).getIdTask())) {
-                mapEpic.get(idEpic).getIdSubtask().remove((Integer) mapSubtask.get(index).getIdTask());
+        for (Subtask subtask : mapSubtask.values()) {
+            int idEpic = subtask.getIdEpic();
+            if (mapEpic.get(idEpic).getIdSubtask().contains(subtask.getIdTask())) {
+                mapEpic.get(idEpic).getIdSubtask().remove((Integer) subtask.getIdTask());
             }
         }
         mapSubtask.clear();
@@ -109,9 +107,7 @@ public class TaskManager {
     }
 
     public void deleteTaskById(int idTask) {
-        if (mapTask.containsKey(idTask)) {
-            mapTask.remove(idTask);
-        }
+        mapTask.remove(idTask);
     }
 
     public void deleteSubtaskById(int idSubtask) {
@@ -149,7 +145,7 @@ public class TaskManager {
         return list;
     }
 
-    public Task.TaskStatus getUpdateStatusEpic(int idEpic) {
+    public Status getUpdateStatusEpic(int idEpic) {
         mapEpic.get(idEpic).setCounterInProgress(0);
         mapEpic.get(idEpic).setCounterDone(0);
         mapEpic.get(idEpic).setCounterNew(0);
@@ -160,11 +156,11 @@ public class TaskManager {
         boolean statusNew = list.size() == mapEpic.get(idEpic).getCounterNew();
         boolean statusDone = list.size() == mapEpic.get(idEpic).getCounterDone();
         if (list.isEmpty() || statusNew) {
-            return Task.TaskStatus.NEW;
+            return Status.NEW;
         } else if (statusDone) {
-            return Task.TaskStatus.DONE;
+            return Status.DONE;
         } else {
-            return Task.TaskStatus.IN_PROGRESS;
+            return Status.IN_PROGRESS;
         }
     }
 
@@ -183,7 +179,6 @@ public class TaskManager {
                 break;
             default:
                 break;
-
         }
     }
 }
