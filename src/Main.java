@@ -3,34 +3,33 @@ import task.*;
 public class Main {
 
     public static void main(String[] args) {
-       TaskManager taskManager= new TaskManager();
-       taskManager.createEpic(new Epic(TaskManager.getIdInc(), "Переезд","В другой город",
-               Status.NEW));
-       taskManager.createTask(new Task(TaskManager.getIdInc(),"Поход в магазин",
-               "Купить продукты на неделю", Status.NEW));
-        taskManager.createTask(new Task(TaskManager.getIdInc(),"Прогулка",
+        TaskManager manager = Managers.getDefault();
+
+        manager.createEpic(new Epic(manager.getIdInc(), "Переезд", "В другой город",
+                Status.NEW));
+        manager.createTask(new Task(manager.getIdInc(), "Поход в магазин",
+                "Купить продукты на неделю", Status.NEW));
+        manager.createTask(new Task(manager.getIdInc(), "Прогулка",
                 "Погулять с собакой ", Status.NEW));
-       taskManager.createSubtask(new Subtask(TaskManager.getIdInc(),"Найти фирму","Перевозка вещей",
-               Status.NEW,0));
-       taskManager.createSubtask(new Subtask(TaskManager.getIdInc(),"Упаковка","Запаковать вещи по коробкам",
-               Status.NEW,0));
-       taskManager.createEpic(new Epic(TaskManager.getIdInc(), "Врач","Стоматолог",
-               Status.NEW));
-       taskManager.createSubtask(new Subtask(TaskManager.getIdInc(),"Записаться на прием",
-               "Позвонить во торник после 9.00",Status.NEW,5));
-        System.out.println(taskManager.getListEpic());
-        System.out.println(taskManager.getListSubtask());
-        taskManager.updateSubtask(4,new Subtask(TaskManager.getIdInc(),"Упаковка","Запаковать вещи по коробкам",
-                Status.DONE,0));
-        System.out.println(taskManager.getListSubtaskEpic(0));
-        System.out.println(taskManager.getListEpic());
-        taskManager.updateSubtask(3,new Subtask(TaskManager.getIdInc(),"Найти фирму","Перевозка вещей",
-                Status.DONE,0));
-        System.out.println(taskManager.getListEpic());
+        manager.createSubtask(new Subtask(manager.getIdInc(), "Найти фирму", "Перевозка вещей",
+                Status.NEW, 0));
+        manager.createSubtask(new Subtask(manager.getIdInc(), "Упаковка", "Запаковать вещи по коробкам",
+                Status.NEW, 0));
+        manager.createEpic(new Epic(manager.getIdInc(), "Врач", "Стоматолог",
+                Status.NEW));
+        manager.createSubtask(new Subtask(manager.getIdInc(), "Записаться на прием",
+                "Позвонить во торник после 9.00", Status.NEW, 5));
 
+        manager.getTaskId(2);
+        manager.getEpiId(5);
+        manager.getSubtaskId(3);
+        System.out.println(manager.getHistory());
+        manager.getEpiId(0);
 
-
-
+        manager.getTaskId(2);
+        manager.getEpiId(5);
+        manager.getSubtaskId(3);
+        System.out.println(manager.getHistory());
 
     }
 }
