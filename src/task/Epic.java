@@ -9,8 +9,8 @@ public class Epic extends Task {
     private int counterDone;
     private int counterInProgress;
 
-    public Epic(int idTask, String title, String description, Status status) {
-        super(idTask, title, description, status);
+    public Epic( String title, String description, Status status) {
+        super( title, description, status);
         this.idSubtask = new ArrayList<>();
         this.counterNew = 0;
         this.counterDone = 0;

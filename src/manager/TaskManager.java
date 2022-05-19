@@ -1,10 +1,11 @@
+package manager;
+
 import task.*;
 
 import java.util.List;
 import java.util.Optional;
 
 public interface TaskManager {
-    int getIdInc();
 
     void clearTask();
 

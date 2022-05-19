@@ -1,3 +1,6 @@
+package manager;
+
+import manager.HistoryManager;
 import task.*;
 
 import java.util.*;
@@ -15,15 +18,14 @@ public class InMemoryTaskManager implements TaskManager {
         mapTask = new HashMap<>();
         mapSubtask = new HashMap<>();
         historyManager = Managers.getDefaultHistory();
-
     }
 
     public List<Task> getHistory() {
         return historyManager.getHistory();
     }
 
-    @Override
-    public int getIdInc() {
+
+    private int getIdInc() {
         return idInc++;
     }
 
@@ -64,34 +66,36 @@ public class InMemoryTaskManager implements TaskManager {
 
     @Override
     public Optional<Task> getTaskId(int id) {
-        historyManager.add(mapTask.get(id));
+        if (mapTask.get(id) != null) historyManager.add(mapTask.get(id));
         return Optional.ofNullable(mapTask.get(id));
     }
 
     @Override
     public Optional<Subtask> getSubtaskId(int id) {
-        historyManager.add(mapSubtask.get(id));
+        if (mapSubtask.get(id) != null) historyManager.add(mapSubtask.get(id));
         return Optional.ofNullable(mapSubtask.get(id));
     }
 
     @Override
     public Optional<Epic> getEpiId(int id) {
-        historyManager.add(mapEpic.get(id));
+        if (mapEpic.get(id) != null) historyManager.add(mapEpic.get(id));
         return Optional.ofNullable(mapEpic.get(id));
     }
 
     @Override
     public void createEpic(Epic epic) {
         if (epic != null) {
-            // epic.setStatus(updateStatusEpic(epic.getIdTask()));
+            epic.setIdTask(getIdInc());
             mapEpic.put(epic.getIdTask(), epic);
         } else System.out.println("Эпик не создан");
     }
 
     @Override
     public void createTask(Task task) {
-        if (task != null) mapTask.put(task.getIdTask(), task);
-        else System.out.println("Задача не создана");
+        if (task != null) {
+            task.setIdTask(getIdInc());
+            mapTask.put(task.getIdTask(), task);
+        } else System.out.println("Задача не создана");
     }
 
     @Override
@@ -99,6 +103,7 @@ public class InMemoryTaskManager implements TaskManager {
         if (subtask != null) {
             if (mapEpic.containsKey(subtask.getIdEpic())) {
                 mapEpic.get(subtask.getIdEpic()).setStatus(getUpdateStatusEpic(subtask.getIdEpic()));
+                subtask.setIdTask(getIdInc());
                 mapSubtask.put(subtask.getIdTask(), subtask);
                 mapEpic.get(subtask.getIdEpic()).getIdSubtask().add(subtask.getIdTask());
             } else {

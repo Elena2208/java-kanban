@@ -4,13 +4,17 @@ import java.util.Objects;
 public class Task {
     private String title;
     private String description;
+
+    public void setIdTask(int idTask) {
+        this.idTask = idTask;
+    }
+
     private int idTask;
     private Status status;
 
-    public Task(int idTask, String title, String description, Status status) {
+    public Task( String title, String description, Status status) {
         this.title = title;
         this.description = description;
-        this.idTask = idTask;
         this.status = status;
     }
 
