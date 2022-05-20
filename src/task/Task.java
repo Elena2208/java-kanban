@@ -1,21 +1,21 @@
 package task;
+
 import java.util.Objects;
 
 public class Task {
     private String title;
     private String description;
-
-    public void setIdTask(int idTask) {
-        this.idTask = idTask;
-    }
-
     private int idTask;
     private Status status;
 
-    public Task( String title, String description, Status status) {
+    public Task(String title, String description, Status status) {
         this.title = title;
         this.description = description;
         this.status = status;
+    }
+
+    public void setIdTask(int idTask) {
+        this.idTask = idTask;
     }
 
     public String getTitle() {
@@ -36,7 +36,7 @@ public class Task {
 
     @Override
     public String toString() {
-        return  "Название='" + title + '\'' +
+        return "Название='" + title + '\'' +
                 ", описание='" + description + '\'' +
                 ", id=" + idTask +
                 ", статус='" + status + '\'' +

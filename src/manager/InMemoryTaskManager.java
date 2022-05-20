@@ -24,7 +24,6 @@ public class InMemoryTaskManager implements TaskManager {
         return historyManager.getHistory();
     }
 
-
     private int getIdInc() {
         return idInc++;
     }
@@ -40,7 +39,6 @@ public class InMemoryTaskManager implements TaskManager {
     public Map<Object, Object> getListSubtask() {
         return mapSubtask.isEmpty() ? Collections.emptyMap() : new HashMap<>(mapSubtask);
     }
-
 
     @Override
     public void clearTask() {
@@ -66,19 +64,25 @@ public class InMemoryTaskManager implements TaskManager {
 
     @Override
     public Optional<Task> getTaskId(int id) {
-        if (mapTask.get(id) != null) historyManager.add(mapTask.get(id));
+        if (mapTask.get(id) != null) {
+            historyManager.add(mapTask.get(id));
+        }
         return Optional.ofNullable(mapTask.get(id));
     }
 
     @Override
     public Optional<Subtask> getSubtaskId(int id) {
-        if (mapSubtask.get(id) != null) historyManager.add(mapSubtask.get(id));
+        if (mapSubtask.get(id) != null) {
+            historyManager.add(mapSubtask.get(id));
+        }
         return Optional.ofNullable(mapSubtask.get(id));
     }
 
     @Override
     public Optional<Epic> getEpiId(int id) {
-        if (mapEpic.get(id) != null) historyManager.add(mapEpic.get(id));
+        if (mapEpic.get(id) != null) {
+            historyManager.add(mapEpic.get(id));
+        }
         return Optional.ofNullable(mapEpic.get(id));
     }
 

@@ -27,8 +27,7 @@ public class InMemoryHistoryManager implements HistoryManager {
 
     @Override
     public List<Task> getHistory() {
-        List<Task> copy = List.copyOf(listHistory);
-        return listHistory.isEmpty() ? Collections.emptyList() : copy;
+        return listHistory.isEmpty() ? Collections.emptyList() : List.copyOf(listHistory);
     }
 
 }
