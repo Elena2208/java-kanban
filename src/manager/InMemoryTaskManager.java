@@ -42,6 +42,10 @@ public class InMemoryTaskManager implements TaskManager {
 
     @Override
     public void clearTask() {
+        for (int id : mapTask.keySet())
+        {
+            historyManager.remove(id);
+        }
         mapTask.clear();
     }
 
@@ -52,12 +56,17 @@ public class InMemoryTaskManager implements TaskManager {
             if (mapEpic.get(idEpic).getIdSubtask().contains(subtask.getIdTask())) {
                 mapEpic.get(idEpic).getIdSubtask().remove((Integer) subtask.getIdTask());
             }
+            historyManager.remove(subtask.getIdTask());
         }
         mapSubtask.clear();
     }
 
     @Override
     public void clearEpic() {
+        for (int id:mapEpic.keySet())
+        {
+            historyManager.remove(id);
+        }
         mapSubtask.clear();
         mapEpic.clear();
     }
@@ -142,6 +151,7 @@ public class InMemoryTaskManager implements TaskManager {
 
     @Override
     public void deleteTaskById(int idTask) {
+        historyManager.remove(idTask);
         mapTask.remove(idTask);
     }
 
@@ -152,10 +162,12 @@ public class InMemoryTaskManager implements TaskManager {
             ArrayList<Integer> list = mapEpic.get(idEpic).getIdSubtask();
             for (int i = 0; i < list.size(); i++) {
                 if (list.get(i) == idSubtask) {
+
                     list.remove(list.get(i));
                 }
             }
             mapEpic.get(idEpic).setStatus(getUpdateStatusEpic(idEpic));
+            historyManager.remove(idSubtask);
             mapSubtask.remove(idSubtask);
         }
     }
@@ -165,9 +177,11 @@ public class InMemoryTaskManager implements TaskManager {
         if (mapEpic.containsKey(idEpic)) {
             for (int index : mapEpic.get(idEpic).getIdSubtask()) {
                 if (mapSubtask.containsKey(index)) {
+                    historyManager.remove(index);
                     mapSubtask.remove(index);
                 }
             }
+            historyManager.remove(idEpic);
             mapEpic.remove(idEpic);
         } else System.out.println("Эпик не удален");
     }

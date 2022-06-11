@@ -2,8 +2,7 @@ package manager;
 
 import task.*;
 
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 public interface TaskManager {
 
@@ -38,5 +37,11 @@ public interface TaskManager {
     Optional<Epic> getEpiId(int id);
 
     List<Task> getHistory();
+
+    Map<Object, Object> getListTask();
+
+    Map<Object, Object> getListEpic();
+
+    Map<Object, Object> getListSubtask();
 
 }
