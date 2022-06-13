@@ -1,6 +1,6 @@
 package manager;
 
-import manager.HistoryManager;
+
 import task.*;
 
 import java.util.*;
@@ -24,7 +24,7 @@ public class InMemoryTaskManager implements TaskManager {
         return historyManager.getHistory();
     }
 
-    private int getIdInc() {
+    private static int getIdInc() {
         return idInc++;
     }
 
@@ -42,8 +42,7 @@ public class InMemoryTaskManager implements TaskManager {
 
     @Override
     public void clearTask() {
-        for (int id : mapTask.keySet())
-        {
+        for (int id : mapTask.keySet()) {
             historyManager.remove(id);
         }
         mapTask.clear();
@@ -63,9 +62,11 @@ public class InMemoryTaskManager implements TaskManager {
 
     @Override
     public void clearEpic() {
-        for (int id:mapEpic.keySet())
-        {
+        for (int id : mapEpic.keySet()) {
             historyManager.remove(id);
+        }
+        for (Task subtask : mapSubtask.values()) {
+            historyManager.remove(subtask.getIdTask());
         }
         mapSubtask.clear();
         mapEpic.clear();
@@ -100,7 +101,9 @@ public class InMemoryTaskManager implements TaskManager {
         if (epic != null) {
             epic.setIdTask(getIdInc());
             mapEpic.put(epic.getIdTask(), epic);
-        } else System.out.println("Эпик не создан");
+        } else {
+            System.out.println("Эпик не создан");
+        }
     }
 
     @Override
@@ -108,7 +111,9 @@ public class InMemoryTaskManager implements TaskManager {
         if (task != null) {
             task.setIdTask(getIdInc());
             mapTask.put(task.getIdTask(), task);
-        } else System.out.println("Задача не создана");
+        } else {
+            System.out.println("Задача не создана");
+        }
     }
 
     @Override
@@ -162,7 +167,6 @@ public class InMemoryTaskManager implements TaskManager {
             ArrayList<Integer> list = mapEpic.get(idEpic).getIdSubtask();
             for (int i = 0; i < list.size(); i++) {
                 if (list.get(i) == idSubtask) {
-
                     list.remove(list.get(i));
                 }
             }
@@ -183,7 +187,9 @@ public class InMemoryTaskManager implements TaskManager {
             }
             historyManager.remove(idEpic);
             mapEpic.remove(idEpic);
-        } else System.out.println("Эпик не удален");
+        } else {
+            System.out.println("Эпик не удален");
+        }
     }
 
 
