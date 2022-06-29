@@ -2,6 +2,7 @@ package manager;
 
 import task.*;
 
+import java.io.IOException;
 import java.util.*;
 
 public interface TaskManager {
@@ -38,10 +39,12 @@ public interface TaskManager {
 
     List<Task> getHistory();
 
-    Map<Object, Object> getListTask();
+    Map<Integer, Task> getListTask();
 
-    Map<Object, Object> getListEpic();
+    Map<Integer, Epic> getListEpic();
 
-    Map<Object, Object> getListSubtask();
+    Map<Integer, Subtask> getListSubtask();
+
+    void save() throws IOException;
 
 }

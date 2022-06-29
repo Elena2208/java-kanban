@@ -1,0 +1,7 @@
+id,type,name,status,description,epic
+0,TASK,Позвонить маме,NEW,Уточнить инфу
+1,TASK,Записаться к врачу,IN_PROGRESS, На июнь 
+2,TASK,Заплатить коммуналку,DONE, срочно 
+3,EPIC,ДР,IN_PROGRESS,Подготовка
+
+0,1,2,3,

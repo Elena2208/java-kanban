@@ -5,8 +5,12 @@ import java.util.Objects;
 public class Subtask extends Task {
     private int idEpic;
 
-    public Subtask( String title, String description, Status status, int idEpic) {
-        super( title, description, status);
+    public Subtask() {
+    }
+
+    public Subtask(String title, String description, Status status, int idEpic) {
+        super(title, description, status);
+        setTypeTask(TypeTask.SUBTASK);
         this.idEpic = idEpic;
     }
 
@@ -14,13 +18,16 @@ public class Subtask extends Task {
         return idEpic;
     }
 
+    public void setIdEpic(int idEpic) {
+        this.idEpic = idEpic;
+    }
+
     @Override
     public String toString() {
         return "Входит в эпик № = " + idEpic + ", " +
-                super.toString() ;
+                super.toString();
 
     }
-
 
     @Override
     public boolean equals(Object o) {

@@ -3,14 +3,17 @@ package manager;
 
 import task.*;
 
+import java.io.IOException;
 import java.util.*;
 
 public class InMemoryTaskManager implements TaskManager {
-    private static int idInc;
-    private HashMap<Integer, Task> mapTask;
-    private HashMap<Integer, Subtask> mapSubtask;
-    private HashMap<Integer, Epic> mapEpic;
-    private HistoryManager historyManager;
+
+
+    protected static int idInc;
+    protected HashMap<Integer, Task> mapTask;
+    protected HashMap<Integer, Subtask> mapSubtask;
+    protected HashMap<Integer, Epic> mapEpic;
+    protected HistoryManager historyManager;
 
 
     public InMemoryTaskManager() {
@@ -20,6 +23,7 @@ public class InMemoryTaskManager implements TaskManager {
         historyManager = Managers.getDefaultHistory();
     }
 
+
     public List<Task> getHistory() {
         return historyManager.getHistory();
     }
@@ -28,16 +32,21 @@ public class InMemoryTaskManager implements TaskManager {
         return idInc++;
     }
 
-    public Map<Object, Object> getListTask() {
+    public Map<Integer, Task> getListTask() {
         return mapTask.isEmpty() ? Collections.emptyMap() : new HashMap<>(mapTask);
     }
 
-    public Map<Object, Object> getListEpic() {
+    public Map<Integer, Epic> getListEpic() {
         return mapEpic.isEmpty() ? Collections.emptyMap() : new HashMap<>(mapEpic);
     }
 
-    public Map<Object, Object> getListSubtask() {
+    public Map<Integer, Subtask> getListSubtask() {
         return mapSubtask.isEmpty() ? Collections.emptyMap() : new HashMap<>(mapSubtask);
+    }
+
+    @Override
+    public void save() {
+
     }
 
     @Override
