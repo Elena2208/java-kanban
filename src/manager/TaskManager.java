@@ -29,5 +29,6 @@ public interface TaskManager {
 
     Map<Integer, Subtask> getListSubtask();
 
+    HashMap<Integer, Task> getListSubtaskEpic(int idTask);
 
 }

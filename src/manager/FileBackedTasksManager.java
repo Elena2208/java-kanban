@@ -61,24 +61,17 @@ public class FileBackedTasksManager extends InMemoryTaskManager {
                     case "SUBTASK":
                         Subtask subtask = (Subtask) newFileBackedTasksManager.taskFromString(line[i]);
                         newFileBackedTasksManager.createTask(subtask);
+                        Epic epic = (Epic) newFileBackedTasksManager.mapTasks.get(subtask.getIdEpic());
+                        epic.getIdSubtask().add(subtask.getIdTask());
                         break;
                     case "EPIC":
-                        Epic epic = (Epic) newFileBackedTasksManager.taskFromString(line[i]);
-                        newFileBackedTasksManager.createTask(epic);
+                        Epic epicNew = (Epic) newFileBackedTasksManager.taskFromString(line[i]);
+                        newFileBackedTasksManager.createTask(epicNew);
                         break;
                     default:
-                        ;
                 }
-
             }
-
-    /*        for (Subtask subtask : newFileBackedTasksManager.mapSubtask.values()) {
-                Epic epic = newFileBackedTasksManager.mapEpic.get(subtask.getIdEpic());
-                epic.getIdSubtask().add(subtask.getIdTask());
-            }*/
-
             List<Integer> list = historyFromString(line[line.length - 1]);
-
             for (int i : list) {
                 if (newFileBackedTasksManager.mapTasks.containsKey(i)) {
                     Task task = newFileBackedTasksManager.mapTasks.get(i);
@@ -199,13 +192,10 @@ public class FileBackedTasksManager extends InMemoryTaskManager {
 
     @Override
     public List<Task> getHistory() {
-        save();
         return super.getHistory();
     }
 
-
     private void save() {
-
         try (FileWriter writer = new FileWriter(fileName)) {
             writer.write(fileHeader + "\n");
             for (Task task : getListTask().values()) {
@@ -244,8 +234,9 @@ public class FileBackedTasksManager extends InMemoryTaskManager {
 
     @Override
     public Optional<Task> getTaskId(int id) {
-        save();
-        return super.getTaskId(id);
+        Optional<Task> task = super.getTaskId(id);
+        task.ifPresent(t -> save());
+        return task;
     }
 
     @Override
@@ -264,6 +255,11 @@ public class FileBackedTasksManager extends InMemoryTaskManager {
     public void deleteTaskById(int idTask) {
         super.deleteTaskById(idTask);
         save();
+    }
+
+    @Override
+    public HashMap<Integer, Task> getListSubtaskEpic(int idTask) {
+        return super.getListSubtaskEpic(idTask);
     }
 
 }

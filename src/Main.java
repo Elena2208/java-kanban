@@ -19,12 +19,17 @@ public class Main {
         System.out.println(manager.getListTask());
         manager.updateTask(3, new Subtask("Подарок", "Почта", Status.DONE, 2));
         System.out.println(manager.getListEpic());
+        manager.getTaskId(0);
+        manager.getTaskId(5);
+
         FileBackedTasksManager newFile = FileBackedTasksManager.loadFromFile(file);
-        manager.createTask(new Epic("new", "epic", Status.NEW));
+
+        manager.createTask(new Subtask("new", "epic", Status.NEW, 2));
         System.out.println(manager.getListEpic());
         System.out.println(manager.getListTask());
         manager.getTaskId(6);
         manager.getTaskId(4);
+        System.out.println(manager.getListSubtaskEpic(2));
 
     }
 }

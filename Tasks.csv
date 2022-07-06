@@ -3,8 +3,8 @@ id,type,name,status,description,epic
 1,TASK,Записаться к врачу,IN_PROGRESS, На июнь 
 5,TASK,Заплатить коммуналку,DONE, срочно 
 2,EPIC,ДР,DONE,Подготовка
-6,EPIC,new,NEW,epic
 3,SUBTASK,Подарок,DONE,Почта,2
 4,SUBTASK,Приглашения,DONE,Рассылка,2
+6,SUBTASK,new,NEW,epic,2
 
-6
+0,5,6,4
