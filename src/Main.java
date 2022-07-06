@@ -12,29 +12,19 @@ public class Main {
         TaskManager manager = Managers.getDefault();
         manager.createTask(new Task("Позвонить маме", "Уточнить инфу", Status.NEW));
         manager.createTask(new Task("Записаться к врачу", " На июнь ", Status.IN_PROGRESS));
-        manager.createEpic(new Epic("ДР", "Подготовка", Status.NEW));
-        manager.createSubtask(new Subtask("Подарок", "Почта", Status.IN_PROGRESS, 2));
-        manager.createSubtask(new Subtask("Приглашения", "Рассылка", Status.IN_PROGRESS, 2));
+        manager.createTask(new Epic("ДР", "Подготовка", Status.NEW));
+        manager.createTask(new Subtask("Подарок", "Почта", Status.IN_PROGRESS, 2));
+        manager.createTask(new Subtask("Приглашения", "Рассылка", Status.DONE, 2));
         manager.createTask(new Task("Заплатить коммуналку", " срочно ", Status.DONE));
-        manager.getEpiId(2);
-        manager.getTaskId(0);
-        manager.getTaskId(1);
-        manager.getSubtaskId(3);
-        manager.getSubtaskId(4);
-        manager.getTaskId(5);
-        manager.getHistory();
-
-
+        System.out.println(manager.getListTask());
+        manager.updateTask(3, new Subtask("Подарок", "Почта", Status.DONE, 2));
+        System.out.println(manager.getListEpic());
         FileBackedTasksManager newFile = FileBackedTasksManager.loadFromFile(file);
-
-        System.out.println(newFile.getHistory());
-        System.out.println();
-        System.out.println(newFile.getListSubtask());
-        System.out.println();
-        System.out.println(newFile.getListEpic());
-        System.out.println();
-        System.out.println(newFile.getListTask());
-
+        manager.createTask(new Epic("new", "epic", Status.NEW));
+        System.out.println(manager.getListEpic());
+        System.out.println(manager.getListTask());
+        manager.getTaskId(6);
+        manager.getTaskId(4);
 
     }
 }

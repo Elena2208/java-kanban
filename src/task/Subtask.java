@@ -24,8 +24,7 @@ public class Subtask extends Task {
 
     @Override
     public String toString() {
-        return "Входит в эпик № = " + idEpic + ", " +
-                super.toString();
+        return super.toString() + ", эпик № = " + idEpic;
 
     }
 

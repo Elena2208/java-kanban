@@ -60,7 +60,6 @@ public class Task {
         this.status = status;
     }
 
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -77,12 +76,11 @@ public class Task {
 
     @Override
     public String toString() {
-        return "Тип задачи =" + typeTask +
-                ", название ='" + title + '\'' +
-                ", описание ='" + description + '\'' +
-                ", ID =" + idTask +
-                ", статус=" + status +
-                '}';
+        return "Тип задачи = " + typeTask +
+                ", название = " + title +
+                ", описание = " + description +
+                ", ID = " + idTask +
+                ", статус= " + status;
     }
 }
 
