@@ -23,12 +23,13 @@ public class Subtask extends Task {
     }
 
     @Override
+
     public String toString() {
         return super.toString() + ", эпик № = " + idEpic;
-
     }
 
     @Override
+
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
@@ -38,7 +39,10 @@ public class Subtask extends Task {
     }
 
     @Override
+
     public int hashCode() {
         return Objects.hash(super.hashCode(), idEpic);
     }
+
 }
+

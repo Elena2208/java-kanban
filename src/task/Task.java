@@ -1,6 +1,8 @@
 package task;
 
+
 import java.util.Objects;
+
 
 public class Task {
     private TypeTask typeTask;
@@ -9,6 +11,7 @@ public class Task {
     private int idTask;
     private Status status;
 
+
     public Task(String title, String description, Status status) {
         this.typeTask = TypeTask.TASK;
         this.title = title;
@@ -16,9 +19,9 @@ public class Task {
         this.status = status;
     }
 
+
     public Task() {
     }
-
 
     public TypeTask getTypeTask() {
         return typeTask;
@@ -61,20 +64,26 @@ public class Task {
     }
 
     @Override
+
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Task task = (Task) o;
         return idTask == task.idTask && typeTask == task.typeTask && Objects.equals(title, task.title)
                 && Objects.equals(description, task.description) && status == task.status;
+
     }
 
+
     @Override
+
     public int hashCode() {
         return Objects.hash(typeTask, title, description, idTask, status);
     }
 
+
     @Override
+
     public String toString() {
         return "Тип задачи = " + typeTask +
                 ", название = " + title +
@@ -83,4 +92,6 @@ public class Task {
                 ", статус= " + status;
     }
 }
+
+
 
