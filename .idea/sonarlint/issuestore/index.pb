@@ -4,8 +4,6 @@
 :
 
 .gitignore,a\5\a5cc2925ca8258af241be7e5b0381edf30266302
-W
-'src/manager/FileBackedTasksManager.java,d\7\d797b96740c9dcaf20b02c97936b6b36be305d33
 O
 src/manager/HistoryManager.java,f\0\f0c741df96791e27097b39b0bc018b06cb88f0a9
 W
@@ -20,8 +18,6 @@ E
 src/task/Subtask.java,b\4\b4fba59b5a6f6eb6b74e9613d5f800634e34de9f
 B
 src/task/Task.java,f\1\f10b9f02e63092d49901b5d65872850774fa9ee8
-T
-$src/manager/InMemoryTaskManager.java,a\a\aa928e2b414d2c845d9fdad53e0c5bb8aad86dc4
 F
 src/task/TypeTask.java,e\7\e7dc3d2ac5528ad5c3663106e743cd84459af6ba
 I

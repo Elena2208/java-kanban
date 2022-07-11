@@ -42,7 +42,6 @@ public class InMemoryTaskManager implements TaskManager {
     }
 
     @Override
-
     public void clearTask() {
         for (int id : mapTask.keySet()) {
             historyManager.remove(id);
@@ -52,7 +51,6 @@ public class InMemoryTaskManager implements TaskManager {
 
 
     @Override
-
     public void clearSubtask() {
         for (Subtask subtask : mapSubtask.values()) {
             int idEpic = subtask.getIdEpic();
@@ -66,7 +64,6 @@ public class InMemoryTaskManager implements TaskManager {
 
 
     @Override
-
     public void clearEpic() {
         for (int id : mapEpic.keySet()) {
             historyManager.remove(id);
@@ -80,7 +77,6 @@ public class InMemoryTaskManager implements TaskManager {
 
 
     @Override
-
     public Optional<Task> getTaskId(int id) {
         if (mapTask.get(id) != null) {
             historyManager.add(mapTask.get(id));
@@ -89,7 +85,6 @@ public class InMemoryTaskManager implements TaskManager {
     }
 
     @Override
-
     public Optional<Subtask> getSubtaskId(int id) {
         if (mapSubtask.get(id) != null) {
             historyManager.add(mapSubtask.get(id));
@@ -98,7 +93,6 @@ public class InMemoryTaskManager implements TaskManager {
     }
 
     @Override
-
     public Optional<Epic> getEpiId(int id) {
         if (mapEpic.get(id) != null) {
             historyManager.add(mapEpic.get(id));
@@ -108,7 +102,6 @@ public class InMemoryTaskManager implements TaskManager {
 
 
     @Override
-
     public void createEpic(Epic epic) {
         if (epic != null) {
             if (epic.getIdTask() == 0) {
@@ -122,7 +115,6 @@ public class InMemoryTaskManager implements TaskManager {
 
 
     @Override
-
     public void createTask(Task task) {
         if (task != null) {
             if (task.getIdTask() == 0) {
@@ -135,7 +127,6 @@ public class InMemoryTaskManager implements TaskManager {
     }
 
     @Override
-
     public void createSubtask(Subtask subtask) {
         if (subtask != null) {
             if (subtask.getIdTask() == 0) {
@@ -153,7 +144,6 @@ public class InMemoryTaskManager implements TaskManager {
 
 
     @Override
-
     public void updateTask(int idTask, Task task) {
         if (mapTask.containsKey(idTask)) {
             task.setIdTask(idTask);
@@ -163,7 +153,6 @@ public class InMemoryTaskManager implements TaskManager {
 
 
     @Override
-
     public void updateEpic(int idEpic, Epic epic) {
         if (mapEpic.containsKey(idEpic)) {
             epic.setIdTask(idEpic);
@@ -173,7 +162,6 @@ public class InMemoryTaskManager implements TaskManager {
 
 
     @Override
-
     public void updateSubtask(int idSubtask, Subtask subtask) {
         if (mapSubtask.containsKey(idSubtask)) {
             subtask.setIdTask(idSubtask);
@@ -184,7 +172,6 @@ public class InMemoryTaskManager implements TaskManager {
 
 
     @Override
-
     public void deleteTaskById(int idTask) {
         if (mapTask.containsKey(idTask)) {
             historyManager.remove(idTask);
@@ -194,7 +181,6 @@ public class InMemoryTaskManager implements TaskManager {
 
 
     @Override
-
     public void deleteSubtaskById(int idSubtask) {
         if (mapSubtask.containsKey(idSubtask)) {
             int idEpic = mapSubtask.get(idSubtask).getIdEpic();
@@ -212,7 +198,6 @@ public class InMemoryTaskManager implements TaskManager {
 
 
     @Override
-
     public void deleteEpicById(int idEpic) {
         if (mapEpic.containsKey(idEpic)) {
             for (int index : mapEpic.get(idEpic).getIdSubtask()) {
