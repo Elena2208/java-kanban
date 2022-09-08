@@ -1,5 +1,8 @@
 package task;
 
+import java.time.Duration;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.Objects;
 
 public class Subtask extends Task {
@@ -8,8 +11,9 @@ public class Subtask extends Task {
     public Subtask() {
     }
 
-    public Subtask(String title, String description, Status status, int idEpic) {
-        super(title, description, status);
+    public Subtask(String title, String description, Status status, int idEpic, Duration duration,
+                   LocalDateTime startTime) {
+        super(title, description, status, duration, startTime);
         setTypeTask(TypeTask.SUBTASK);
         this.idEpic = idEpic;
     }
@@ -28,8 +32,8 @@ public class Subtask extends Task {
         return super.toString() + ", эпик № = " + idEpic;
     }
 
-    @Override
 
+    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
@@ -39,10 +43,8 @@ public class Subtask extends Task {
     }
 
     @Override
-
     public int hashCode() {
         return Objects.hash(super.hashCode(), idEpic);
     }
-
 }
 

@@ -34,7 +34,7 @@ public interface TaskManager {
 
     Optional<Subtask> getSubtaskId(int id);
 
-    Optional<Epic> getEpiId(int id);
+    Optional<Epic> getEpicId(int id);
 
     List<Task> getHistory();
 
@@ -45,6 +45,8 @@ public interface TaskManager {
     Map<Integer, Subtask> getListSubtask();
 
     HashMap<Integer, Subtask> getListSubtaskEpic(int idEpic);
+
+    TreeSet <Task> getPrioritizedTasks();
 
 
 }
