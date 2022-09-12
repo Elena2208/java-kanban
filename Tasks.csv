@@ -1,0 +1,8 @@
+id,type,name,status,description,duration,start_time,epic
+4,TASK,task,IN_PROGRESS,new,PT50M,+999999999-12-29T23:59:59.999999999
+0,EPIC,ДР,IN_PROGRESS,Подготовка,PT1H35M,0000-02-01T10:00
+1,SUBTASK,Подарок,DONE,Почта,PT30M,0000-02-01T10:00,0
+2,SUBTASK,Приглашения,DONE,Рассылка,PT30M,0000-02-01T12:10:10,0
+3,SUBTASK,wwww,IN_PROGRESS,fggggg,PT35M,0000-02-01T19:45:10,0
+
+  

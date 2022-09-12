@@ -29,12 +29,5 @@ public class Main {
                 Duration.of(35,ChronoUnit.MINUTES),
                 LocalDateTime.of(0,2,1,11,45,10)));
         out.println(manager.getPrioritizedTasks());
-
-
-
-
-
-
-
     }
 }

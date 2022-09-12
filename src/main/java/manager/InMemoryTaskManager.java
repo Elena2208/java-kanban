@@ -4,35 +4,27 @@ import task.*;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
-import java.time.temporal.ChronoUnit;
 import java.util.*;
 import java.util.stream.Collectors;
 
 
 public class InMemoryTaskManager implements TaskManager {
 
-    class TaskComparator implements Comparator<Task> {
-        @Override
-        public int compare(Task o1, Task o2) {
-            return o1.getStartTime().compareTo(o2.getStartTime());
-        }
-    }
 
     protected static int idInc;
     protected HashMap<Integer, Task> mapTask;
     protected HashMap<Integer, Subtask> mapSubtask;
     protected HashMap<Integer, Epic> mapEpic;
     protected HistoryManager historyManager;
-    protected TaskComparator comparator;
-
+    protected Set<Task> treeSet;
 
     public InMemoryTaskManager() {
         mapEpic = new HashMap<>();
         mapTask = new HashMap<>();
         mapSubtask = new HashMap<>();
         historyManager = Managers.getDefaultHistory();
-        comparator = new TaskComparator();
+        treeSet = new TreeSet<Task>(Comparator.nullsLast(Comparator.comparing(Task::getStartTime))
+                .thenComparing(Task::getIdTask));
     }
 
     private static int getIdInc() {
@@ -131,22 +123,24 @@ public class InMemoryTaskManager implements TaskManager {
     @Override
     public void createTask(Task task) {
         if (task != null) {
-
             if (task.getStartTime() != null && !task.getDuration().isZero()) {
-                task.setEndTime(task.getEndTime());
+                task.getEndTime();
             }
-            try {
-                if (intersectionTimeTask(task)) {
-                    throw new IntersectionTimeTask("Пересечение времени выполнения задачи");
-                } else {
-                    if (task.getIdTask() == 0) {
-                        task.setIdTask(getIdInc());
-                    }
-                    mapTask.put(task.getIdTask(), task);
-                }
-            } catch (IntersectionTimeTask intersectionTimeTask) {
-                System.out.println(intersectionTimeTask.getMessage());
+            if (intersectionTimeTask(task)) {
+                System.out.println("Пересечение времени выполнения задачи");
                 return;
+            } else {
+                if (task.getIdTask() == 0) {
+                    task.setIdTask(getIdInc());
+                }
+                // не получается добавить таску в treeSet если startTime=0, выдает NPE
+                if (task.getStartTime() == null) {
+                    task.setStartTime(LocalDateTime.MAX.minusDays(2));
+                    treeSet.add(task);
+                } else {
+                    treeSet.add(task);
+                }
+                mapTask.put(task.getIdTask(), task);
             }
         } else {
             System.out.println("Задача не создана");
@@ -156,29 +150,26 @@ public class InMemoryTaskManager implements TaskManager {
     @Override
     public void createSubtask(Subtask subtask) {
         if (subtask != null) {
-
-            subtask.setEndTime(subtask.getEndTime());
-            try {
-                if (intersectionTimeTask(subtask)) {
-                    throw new IntersectionTimeTask("Пересечение времени выполнения задачи");
-                } else {
-                    if (subtask.getIdTask() == 0) {
-                        subtask.setIdTask(getIdInc());
-                    }
-                    mapSubtask.put(subtask.getIdTask(), subtask);
-
-                }
-                if (mapEpic.containsKey(subtask.getIdEpic())) {
-                    mapEpic.get(subtask.getIdEpic()).getIdSubtask().add(subtask.getIdTask());
-                    mapEpic.get(subtask.getIdEpic()).setStatus(getUpdateStatusEpic(subtask.getIdEpic()));
-                    getStartTimeEpic(subtask.getIdEpic());
-                    getEndTimeEpic(subtask.getIdEpic());
-                    getDurationEpic(subtask.getIdEpic());
-                }
-            } catch (IntersectionTimeTask intersectionTimeTask) {
-                System.out.println(intersectionTimeTask.getMessage());
+            subtask.getEndTime();
+            if (intersectionTimeTask(subtask)) {
+                System.out.println("Пересечение времени выполнения задачи");
                 return;
+            } else {
+                if (subtask.getIdTask() == 0) {
+                    subtask.setIdTask(getIdInc());
+                }
+                treeSet.add(subtask);
+                mapSubtask.put(subtask.getIdTask(), subtask);
+
             }
+            if (mapEpic.containsKey(subtask.getIdEpic())) {
+                mapEpic.get(subtask.getIdEpic()).getIdSubtask().add(subtask.getIdTask());
+                mapEpic.get(subtask.getIdEpic()).setStatus(getUpdateStatusEpic(subtask.getIdEpic()));
+                getStartTimeEpic(subtask.getIdEpic());
+                getEndTimeEpic(subtask.getIdEpic());
+                getDurationEpic(subtask.getIdEpic());
+            }
+
         } else {
             System.out.println("Задача не создана");
         }
@@ -188,22 +179,15 @@ public class InMemoryTaskManager implements TaskManager {
     @Override
     public void updateTask(int idTask, Task task) {
         if (mapTask.containsKey(idTask)) {
-            task.setEndTime(task.getEndTime());
-            try {
-                if (intersectionTimeTask(task)) {
-                    throw new IntersectionTimeTask("Пересечение времени выполнения задачи");
-                } else {
-
-                    task.setIdTask(idTask);
-                    mapTask.put(idTask, task);
-                }
-
-            } catch (IntersectionTimeTask intersectionTimeTask) {
-                System.out.println(intersectionTimeTask.getMessage());
+            task.getEndTime();
+            if (intersectionTimeTask(task)) {
+                System.out.println("Пересечение времени выполнения задачи");
                 return;
+            } else {
+                task.setIdTask(idTask);
+                mapTask.put(idTask, task);
             }
         }
-
     }
 
     @Override
@@ -218,23 +202,18 @@ public class InMemoryTaskManager implements TaskManager {
     @Override
     public void updateSubtask(int idSubtask, Subtask subtask) {
         if (mapSubtask.containsKey(idSubtask)) {
-            subtask.setEndTime(subtask.getEndTime());
-            try {
-                if (intersectionTimeTask(subtask)) {
-                    throw new IntersectionTimeTask("Пересечение времени выполнения задачи");
-                } else {
-                    subtask.setIdTask(idSubtask);
-                    mapSubtask.put(idSubtask, subtask);
-                    mapEpic.get(subtask.getIdEpic()).setStatus(getUpdateStatusEpic(subtask.getIdEpic()));
-                    getStartTimeEpic(subtask.getIdEpic());
-                    getEndTimeEpic(subtask.getIdEpic());
-                    getDurationEpic(subtask.getIdEpic());
-                }
-            } catch (IntersectionTimeTask intersectionTimeTask) {
-                System.out.println(intersectionTimeTask.getMessage());
+            subtask.getEndTime();
+            if (intersectionTimeTask(subtask)) {
+                System.out.println("Пересечение времени выполнения задачи");
                 return;
+            } else {
+                subtask.setIdTask(idSubtask);
+                mapSubtask.put(idSubtask, subtask);
+                mapEpic.get(subtask.getIdEpic()).setStatus(getUpdateStatusEpic(subtask.getIdEpic()));
+                getStartTimeEpic(subtask.getIdEpic());
+                getEndTimeEpic(subtask.getIdEpic());
+                getDurationEpic(subtask.getIdEpic());
             }
-
         }
     }
 
@@ -243,6 +222,7 @@ public class InMemoryTaskManager implements TaskManager {
     public void deleteTaskById(int idTask) {
         if (mapTask.containsKey(idTask)) {
             historyManager.remove(idTask);
+            treeSet.remove(mapTask.get(idTask));
             mapTask.remove(idTask);
         }
     }
@@ -263,6 +243,7 @@ public class InMemoryTaskManager implements TaskManager {
             getEndTimeEpic(mapSubtask.get(idSubtask).getIdEpic());
             getDurationEpic(mapSubtask.get(idSubtask).getIdEpic());
             historyManager.remove(idSubtask);
+            treeSet.remove(mapSubtask.get(idSubtask));
             mapSubtask.remove(idSubtask);
         }
     }
@@ -296,21 +277,8 @@ public class InMemoryTaskManager implements TaskManager {
     }
 
     @Override
-    public TreeSet<Task> getPrioritizedTasks() {
-        TreeSet<Task> treeSet = new TreeSet<>(comparator);
-        if (!mapTask.isEmpty() || !mapSubtask.isEmpty()) {
-
-            for (Task task : mapSubtask.values()) {
-                task.setStartTime(task.getStartTime());
-                treeSet.add(task);
-            }
-            for (Task task : mapTask.values()) {
-                task.setStartTime(task.getStartTime());
-                treeSet.add(task);
-            }
-        }
+    public Set<Task> getPrioritizedTasks() {
         return treeSet;
-
     }
 
 
@@ -355,11 +323,13 @@ public class InMemoryTaskManager implements TaskManager {
 
     protected void getEndTimeEpic(int idEpic) {
         for (Integer i : mapEpic.get(idEpic).getIdSubtask()) {
-            mapSubtask.get(i).setEndTime(mapSubtask.get(i).getEndTime());
+            if (mapSubtask.get(i).getStartTime() != null) {
+                mapSubtask.get(i).getEndTime();
+            }
         }
         List<Subtask> subtaskList = mapSubtask.values().stream()
                 .filter(subtask -> subtask.getIdEpic() == idEpic)
-                .sorted(comparator)
+                .sorted(Comparator.comparing(Task::getStartTime))
                 .collect(Collectors.toList());
         mapEpic.get(idEpic).setEndTime(subtaskList.get(subtaskList.size() - 1).getEndTime());
 
@@ -383,7 +353,7 @@ public class InMemoryTaskManager implements TaskManager {
 
         List<Subtask> subtaskList = mapSubtask.values().stream().
                 filter(subtask -> subtask.getIdEpic() == idEpic)
-                .sorted(comparator)
+                .sorted(Comparator.comparing(Task::getStartTime))
                 .collect(Collectors.toList());
         if (subtaskList.isEmpty()) {
             mapEpic.get(idEpic).setStartTime(LocalDateTime.now());
@@ -392,20 +362,22 @@ public class InMemoryTaskManager implements TaskManager {
         }
     }
 
+
     private boolean intersectionTimeTask(Task task) {
-        TreeSet<Task> sortedTask = getPrioritizedTasks();
+        Set<Task> sortedTask = getPrioritizedTasks();
         Iterator<Task> iterator = sortedTask.iterator();
         boolean sign = false;
         Task itTask;
         if (!sortedTask.isEmpty()) {
             while (iterator.hasNext()) {
                 itTask = iterator.next();
-                if (!task.getStartTime().isAfter(itTask.getEndTime()))
-                    if (task.getEndTime().isAfter(itTask.getStartTime())) {
-                        sign = true;
-                    }
+                if (task.getStartTime() != null && itTask.getStartTime() != null) {
+                    if (!task.getStartTime().isAfter(itTask.getEndTime()))
+                        if (task.getEndTime().isAfter(itTask.getStartTime())) {
+                            sign = true;
+                        }
+                }
             }
-
         }
         return sign;
     }

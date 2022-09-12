@@ -46,7 +46,7 @@ public interface TaskManager {
 
     HashMap<Integer, Subtask> getListSubtaskEpic(int idEpic);
 
-    TreeSet <Task> getPrioritizedTasks();
+    Set <Task> getPrioritizedTasks();
 
 
 }

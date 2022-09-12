@@ -4,9 +4,10 @@ import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.util.Comparator;
 import java.util.Objects;
 
-public class Task {
+public class Task  {
     private TypeTask typeTask;
     private String title;
     private String description;
@@ -42,20 +43,23 @@ public class Task {
         this.title = title;
         this.description = description;
     }
+
     public Task(String title, String description, Status status, Duration duration) {
         this.typeTask = TypeTask.TASK;
         this.title = title;
         this.description = description;
         this.status = status;
         this.duration = duration;
-        this.startTime = LocalDateTime.MAX;
+
     }
 
     public LocalDateTime getEndTime() {
-        LocalDate date = startTime.toLocalDate();
-        LocalTime time = startTime.toLocalTime().plus(duration);
-        return LocalDateTime.of(date, time);
-
+        if (startTime != null) {
+            endTime = startTime.plus(duration);
+            return endTime;
+        } else {
+            return endTime = null;
+        }
     }
 
     @Override
@@ -66,8 +70,8 @@ public class Task {
                 ", ID = " + idTask +
                 ", статус= " + status +
                 ", продолжительность = " + duration +
-                ", время начала = " + startTime+
-                ", время окончания = "+ endTime+"\n"
+                ", время начала = " + startTime +
+                ", время окончания = " + endTime + "\n"
                 ;
     }
 
@@ -127,6 +131,7 @@ public class Task {
     public void setStartTime(LocalDateTime startTime) {
         this.startTime = startTime;
     }
+
 
     @Override
     public boolean equals(Object o) {

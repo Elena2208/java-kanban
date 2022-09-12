@@ -387,7 +387,7 @@ abstract class TaskManagerTest<T extends TaskManager> {
     void updateStatusEpicNoSubtaskTest() {
         Epic epicNew = new Epic("epic2", "new");
         manager.createEpic(epicNew);
-        assertEquals(Status.NEW.toString(), epicNew.getStatus().toString());
+        assertEquals(Status.NEW, epicNew.getStatus());
     }
 
     @Test
@@ -400,7 +400,7 @@ abstract class TaskManagerTest<T extends TaskManager> {
         manager.createEpic(epicNew);
         manager.createSubtask(sub1);
         manager.createSubtask(sub2);
-        assertEquals(Status.NEW.toString(), epicNew.getStatus().toString());
+        assertEquals(Status.NEW, epicNew.getStatus());
     }
 
 
@@ -414,7 +414,7 @@ abstract class TaskManagerTest<T extends TaskManager> {
         manager.createEpic(epicNew);
         manager.createSubtask(sub1);
         manager.createSubtask(sub2);
-        assertEquals(Status.DONE.toString(), epicNew.getStatus().toString());
+        assertEquals(Status.DONE, epicNew.getStatus());
 
     }
 
@@ -429,7 +429,7 @@ abstract class TaskManagerTest<T extends TaskManager> {
         manager.createEpic(epicNew);
         manager.createSubtask(sub1);
         manager.createSubtask(sub2);
-        assertEquals(Status.IN_PROGRESS.toString(), epicNew.getStatus().toString());
+        assertEquals(Status.IN_PROGRESS, epicNew.getStatus());
 
     }
 
@@ -444,7 +444,7 @@ abstract class TaskManagerTest<T extends TaskManager> {
         manager.createEpic(epicNew);
         manager.createSubtask(sub1);
         manager.createSubtask(sub2);
-        assertEquals(Status.IN_PROGRESS.toString(), epicNew.getStatus().toString());
+        assertEquals(Status.IN_PROGRESS, epicNew.getStatus());
 
     }
 

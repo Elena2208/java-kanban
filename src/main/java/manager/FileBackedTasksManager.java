@@ -127,22 +127,45 @@ public class FileBackedTasksManager extends InMemoryTaskManager {
         String line = "";
         switch (task.getTypeTask()) {
             case TASK:
-                line = String.join(",", Integer.toString(task.getIdTask()), task.getTypeTask().toString(),
-                        task.getTitle(), task.getStatus().toString(), task.getDescription(),
-                        task.getDuration().toString(), task.getStartTime().toString());
+                if (task.getStartTime() != null) {
+                    line = String.join(",", Integer.toString(task.getIdTask()), task.getTypeTask().toString(),
+                            task.getTitle(), task.getStatus().toString(), task.getDescription(),
+                            task.getDuration().toString(), task.getStartTime().toString());
+                } else {
+                    line = String.join(",", Integer.toString(task.getIdTask()),
+                            task.getTypeTask().toString(),
+                            task.getTitle(), task.getStatus().toString(), task.getDescription(),
+                            task.getDuration().toString(), "");
+                }
                 break;
             case EPIC:
                 Epic epic = (Epic) task;
-                line = String.join(",", Integer.toString(epic.getIdTask()), epic.getTypeTask().toString(),
-                        epic.getTitle(), epic.getStatus().toString(), epic.getDescription(),
-                        epic.getDuration().toString(), epic.getStartTime().toString());
+                if (epic.getStartTime() != null) {
+                    line = String.join(",", Integer.toString(epic.getIdTask()), epic.getTypeTask().toString(),
+                            epic.getTitle(), epic.getStatus().toString(), epic.getDescription(),
+                            epic.getDuration().toString(), epic.getStartTime().toString());
+                } else {
+                    line = String.join(",", Integer.toString(epic.getIdTask()),
+                            epic.getTypeTask().toString(),
+                            epic.getTitle(), epic.getStatus().toString(), epic.getDescription(),
+                            epic.getDuration().toString(), "");
+                }
                 break;
             case SUBTASK:
                 Subtask subtask = (Subtask) task;
-                line = String.join(",", Integer.toString(subtask.getIdTask()), subtask.getTypeTask().toString(),
-                        subtask.getTitle(), subtask.getStatus().toString(), subtask.getDescription(),
-                        subtask.getDuration().toString(), subtask.getStartTime().toString(),
-                        Integer.toString(subtask.getIdEpic()));
+                if (subtask.getEndTime() != null) {
+                    line = String.join(",", Integer.toString(subtask.getIdTask()),
+                            subtask.getTypeTask().toString(),
+                            subtask.getTitle(), subtask.getStatus().toString(), subtask.getDescription(),
+                            subtask.getDuration().toString(), subtask.getStartTime().toString(),
+                            Integer.toString(subtask.getIdEpic()));
+                } else {
+                    line = String.join(",", Integer.toString(subtask.getIdTask()),
+                            subtask.getTypeTask().toString(),
+                            subtask.getTitle(), subtask.getStatus().toString(), subtask.getDescription(),
+                            subtask.getDuration().toString(), "",
+                            Integer.toString(subtask.getIdEpic()));
+                }
                 break;
             default:
                 out.println("Не определен тип задачи");
@@ -192,7 +215,11 @@ public class FileBackedTasksManager extends InMemoryTaskManager {
                 newTask.setStatus(Status.valueOf(line[3]));
                 newTask.setDescription(line[4]);
                 newTask.setDuration(Duration.parse(line[5]));
-                newTask.setStartTime(LocalDateTime.parse(line[6]));
+                if (line[6].isEmpty() || line[6].isBlank()) {
+                    newTask.setStartTime(null);
+                } else {
+                    newTask.setStartTime(LocalDateTime.parse(line[6]));
+                }
                 break;
             case "SUBTASK":
                 newTask = new Subtask();
@@ -202,7 +229,11 @@ public class FileBackedTasksManager extends InMemoryTaskManager {
                 newTask.setStatus(Status.valueOf(line[3]));
                 newTask.setDescription(line[4]);
                 newTask.setDuration(Duration.parse(line[5]));
-                newTask.setStartTime(LocalDateTime.parse(line[6]));
+                if (line[6].isEmpty() || line[6].isBlank()) {
+                    newTask.setStartTime(null);
+                } else {
+                    newTask.setStartTime(LocalDateTime.parse(line[6]));
+                }
                 ((Subtask) newTask).setIdEpic(Integer.parseInt(line[7]));
                 break;
             case "EPIC":
@@ -213,7 +244,11 @@ public class FileBackedTasksManager extends InMemoryTaskManager {
                 newTask.setStatus(Status.valueOf(line[3]));
                 newTask.setDescription(line[4]);
                 newTask.setDuration(Duration.parse(line[5]));
-                newTask.setStartTime(LocalDateTime.parse(line[6]));
+                if (line[6].isEmpty() || line[6].isBlank()) {
+                    newTask.setStartTime(null);
+                } else {
+                    newTask.setStartTime(LocalDateTime.parse(line[6]));
+                }
                 break;
             default:
                 out.println("Задача не создана");
