@@ -37,7 +37,6 @@ public class Epic extends Task {
         return idSubtask;
     }
 
-
     public int getCounterNew() {
         return counterNew;
     }

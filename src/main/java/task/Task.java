@@ -1,10 +1,7 @@
 package task;
 
 import java.time.Duration;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
-import java.util.Comparator;
 import java.util.Objects;
 
 public class Task  {
@@ -28,7 +25,6 @@ public class Task  {
         this.status = status;
         this.duration = duration;
         this.startTime = startTime;
-
     }
 
     public Task(String title, String description, Status status) {
@@ -50,7 +46,6 @@ public class Task  {
         this.description = description;
         this.status = status;
         this.duration = duration;
-
     }
 
     public LocalDateTime getEndTime() {
@@ -58,7 +53,7 @@ public class Task  {
             endTime = startTime.plus(duration);
             return endTime;
         } else {
-            return endTime = null;
+            return  null;
         }
     }
 

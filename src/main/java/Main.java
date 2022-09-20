@@ -1,3 +1,4 @@
+import manager.FileBackedTasksManager;
 import manager.Managers;
 import manager.TaskManager;
 import task.*;
@@ -25,9 +26,9 @@ public class Main {
                 Duration.of(35,ChronoUnit.MINUTES),
                 LocalDateTime.of(0,2,1,19,45,10)));
         manager.createTask(new Task("task","new",Status.IN_PROGRESS,Duration.ofMinutes(50)));
-        manager.updateSubtask(3,new Subtask("wwww", "fggggg", Status.IN_PROGRESS, 0,
-                Duration.of(35,ChronoUnit.MINUTES),
-                LocalDateTime.of(0,2,1,11,45,10)));
-        out.println(manager.getPrioritizedTasks());
+        FileBackedTasksManager newFile=FileBackedTasksManager.loadFromFile(file);
+        out.println(newFile.getListSubtask());
+        out.println(newFile.getListEpic());
+        out.println(newFile.getListTask());
     }
 }

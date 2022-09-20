@@ -12,16 +12,16 @@ import java.io.File;
 import java.time.Duration;
 import java.time.LocalDateTime;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class FileBackedTasksManagerTest extends TaskManagerTest <FileBackedTasksManager> {
-   private File file;
-   private TaskManager manager;
+
+
 
    @BeforeEach
    public void beforeEach(){
-       file = new File("\\Tasks.csv");
-       manager = Managers.getDefault();
+       manager = new FileBackedTasksManager("Tasks.csv");
        task = new Task("New_task", "Test", Status.NEW);
        epic = new Epic("New_epic", "test");
        subtaskFirst = new Subtask("SubtaskFirst", "Test", Status.NEW, epic.getIdTask(),
@@ -29,26 +29,28 @@ public class FileBackedTasksManagerTest extends TaskManagerTest <FileBackedTasks
        subtaskSecond = new Subtask("SubtaskSecond", "Test", Status.IN_PROGRESS, epic.getIdTask(),
                Duration.ofMinutes(100), LocalDateTime.of(0,1,10,18,25,36));
    }
+
     @Test
     void loadFromFileIsTaskListIsEmptyTest() {
+        File file = new File("\\Tasks.csv");
         FileBackedTasksManager newFile = FileBackedTasksManager.loadFromFile(file);
         assertTrue(manager.getListEpic().isEmpty());
     }
 
     @Test
     void loadFromFileEpicByNotSubtaskTest(){
-
-        Epic epic=new Epic("ДР", "Подготовка");
+        File file = new File("\\Tasks.csv");
         manager.createEpic(epic);
         FileBackedTasksManager newFile = FileBackedTasksManager.loadFromFile(file);
-        assertTrue(newFile.getEpicId(epic.getIdTask()).isPresent());
+        assertEquals(1,newFile.getListEpic().size());
+
     }
 
 
     @Test
     void loadFromFileHistoryIsEmpty(){
 
-        Epic epic=new Epic("ДР", "Подготовка");
+        File file = new File("\\Tasks.csv");
         manager.createEpic(epic);
         FileBackedTasksManager newFile = FileBackedTasksManager.loadFromFile(file);
         assertTrue(newFile.getHistory().isEmpty());
