@@ -10,7 +10,7 @@ public class Task  {
     private String description;
     private int idTask;
     private Status status;
-    private Duration duration;
+    private long duration;
     private LocalDateTime startTime;
     private LocalDateTime endTime;
 
@@ -18,7 +18,7 @@ public class Task  {
     public Task() {
     }
 
-    public Task(String title, String description, Status status, Duration duration, LocalDateTime startTime) {
+    public Task(String title, String description, Status status, long duration, LocalDateTime startTime) {
         this.typeTask = TypeTask.TASK;
         this.title = title;
         this.description = description;
@@ -40,7 +40,7 @@ public class Task  {
         this.description = description;
     }
 
-    public Task(String title, String description, Status status, Duration duration) {
+    public Task(String title, String description, Status status, long duration) {
         this.typeTask = TypeTask.TASK;
         this.title = title;
         this.description = description;
@@ -50,7 +50,7 @@ public class Task  {
 
     public LocalDateTime getEndTime() {
         if (startTime != null) {
-            endTime = startTime.plus(duration);
+            endTime = startTime.plusMinutes(duration);
             return endTime;
         } else {
             return  null;
@@ -111,11 +111,11 @@ public class Task  {
         this.status = status;
     }
 
-    public Duration getDuration() {
+    public long getDuration() {
         return duration;
     }
 
-    public void setDuration(Duration duration) {
+    public void setDuration(long duration) {
         this.duration = duration;
     }
 

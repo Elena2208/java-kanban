@@ -48,5 +48,7 @@ public interface TaskManager {
 
     Set <Task> getPrioritizedTasks();
 
+    void load();
+
 
 }

@@ -68,10 +68,10 @@ public class HistoryManagerTest {
     @Test
     void deleteTaskIsHistoryTest() {
 
-        Task taskFirst = new Task("taskFirst ","", Status.NEW, Duration.ofMinutes(10), LocalDateTime.of(2022,9,11,9,00,00));
-        Task taskSecond = new Task("taskSecond","", Status.NEW, Duration.ofMinutes(20), LocalDateTime.of(2022,9,11,10,00,00));
-        Task taskThird = new Task("taskThird","", Status.NEW, Duration.ofMinutes(30), LocalDateTime.of(2022,9,11,11,00,00));
-        Task taskFourth = new Task("taskFourth","", Status.NEW, Duration.ofMinutes(100), LocalDateTime.of(2022,9,11,12,00,00));
+        Task taskFirst = new Task("taskFirst ","", Status.NEW, 10, LocalDateTime.of(2022,9,11,9,00,00));
+        Task taskSecond = new Task("taskSecond","", Status.NEW,20, LocalDateTime.of(2022,9,11,10,00,00));
+        Task taskThird = new Task("taskThird","", Status.NEW, 30, LocalDateTime.of(2022,9,11,11,00,00));
+        Task taskFourth = new Task("taskFourth","", Status.NEW, 100, LocalDateTime.of(2022,9,11,12,00,00));
         manager.createTask(taskFirst );
         manager.createTask(taskSecond);
         manager.createTask(taskThird );

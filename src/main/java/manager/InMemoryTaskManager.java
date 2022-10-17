@@ -160,7 +160,7 @@ public class InMemoryTaskManager implements TaskManager {
             if (mapEpic.containsKey(subtask.getIdEpic())) {
                 mapEpic.get(subtask.getIdEpic()).getIdSubtask().add(subtask.getIdTask());
                 mapEpic.get(subtask.getIdEpic()).setStatus(getUpdateStatusEpic(subtask.getIdEpic()));
-                if (subtask.getDuration()!=null) {
+                if (subtask.getDuration()!=0) {
                     setDurationEpic(subtask.getIdEpic());
                 }
                 if (subtask.getStartTime() != null) {
@@ -279,6 +279,11 @@ public class InMemoryTaskManager implements TaskManager {
         return treeSet;
     }
 
+    @Override
+    public void load() {
+
+    }
+
 
     private Status getUpdateStatusEpic(int idEpic) {
         mapEpic.get(idEpic).setCounterInProgress(0);
@@ -346,9 +351,9 @@ public class InMemoryTaskManager implements TaskManager {
                     .collect(Collectors.toList());
             long sumMinute = 0;
             for (Subtask subtask : subtaskList) {
-                sumMinute += subtask.getDuration().toMinutes();
+                sumMinute += subtask.getDuration();
             }
-            mapEpic.get(idEpic).setDuration(Duration.ofMinutes(sumMinute));
+            mapEpic.get(idEpic).setDuration(sumMinute);
         }
     }
 

@@ -354,8 +354,8 @@ abstract class TaskManagerTest<T extends TaskManager> {
 
     @Test
     void getListTaskTest() {
-        Task task1 = new Task("task", "new", Status.IN_PROGRESS, Duration.ofMinutes(50));
-        Task task2 = new Task("task2", "new2", Status.DONE, Duration.ofMinutes(25));
+        Task task1 = new Task("task", "new", Status.IN_PROGRESS, 50);
+        Task task2 = new Task("task2", "new2", Status.DONE, 25);
         manager.createTask(task1);
         manager.createTask(task2);
         assertFalse(manager.getListTask().isEmpty());
@@ -406,9 +406,9 @@ abstract class TaskManagerTest<T extends TaskManager> {
     @Test
     void updateStatusEpicBySubtaskStatusNewTest() {
         Epic epicNew = new Epic("epic2", "new");
-        Subtask sub1 = new Subtask("sub1", "1", Status.NEW, 0, Duration.ofMinutes(52),
+        Subtask sub1 = new Subtask("sub1", "1", Status.NEW, 0, 52,
                 LocalDateTime.of(2000, 1, 15, 14, 15, 00));
-        Subtask sub2 = new Subtask("sub2", "2", Status.NEW, 0, Duration.ofMinutes(240),
+        Subtask sub2 = new Subtask("sub2", "2", Status.NEW, 0, 240,
                 LocalDateTime.of(2000, 1, 29, 00, 00, 00));
         manager.createEpic(epicNew);
         manager.createSubtask(sub1);

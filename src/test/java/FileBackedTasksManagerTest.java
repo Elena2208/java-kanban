@@ -24,10 +24,10 @@ public class FileBackedTasksManagerTest extends TaskManagerTest <FileBackedTasks
        manager = new FileBackedTasksManager("Tasks.csv");
        task = new Task("New_task", "Test", Status.NEW);
        epic = new Epic("New_epic", "test");
-       subtaskFirst = new Subtask("SubtaskFirst", "Test", Status.NEW, epic.getIdTask(),
-               Duration.ofMinutes(50),  LocalDateTime.of(0,1,25,10,10,10));
-       subtaskSecond = new Subtask("SubtaskSecond", "Test", Status.IN_PROGRESS, epic.getIdTask(),
-               Duration.ofMinutes(100), LocalDateTime.of(0,1,10,18,25,36));
+       subtaskFirst = new Subtask("SubtaskFirst", "Test", Status.NEW, epic.getIdTask(),50,
+               LocalDateTime.of(0,1,25,10,10,10));
+       subtaskSecond = new Subtask("SubtaskSecond", "Test", Status.IN_PROGRESS, epic.getIdTask(),100,
+                LocalDateTime.of(0,1,10,18,25,36));
    }
 
     @Test
