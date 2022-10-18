@@ -26,3 +26,15 @@ _
 /src/main/java/manager/ManagerSaveException.java,6\b\6b684bb4192a0fe390886eb18e3dd8b5c215e31a
 Z
 *src/test/java/InMemoryTaskManagerTest.java,a\0\a046517c28c5b5a1c07056045c7035644cab7bb5
+]
+-src/test/java/FileBackedTasksManagerTest.java,4\1\412915ff711d2b7d61a52094730f3276f60c21b3
+V
+&src/main/java/manager/TaskManager.java,5\f\5f03c550abbf97d76917921c2459c05f5788dd1b
+R
+"src/test/java/TaskManagerTest.java,7\d\7d7faabd704bbf529c427731590697b478891b17
+Y
+)src/main/java/manager/HistoryManager.java,f\3\f342dd5983443e825f36097f58d5754b4ba1e5af
+a
+1src/main/java/manager/FileBackedTasksManager.java,a\3\a3186c7206153dc9897d6ae16a1d88e6b9dbd266
+S
+#src/main/java/manager/Managers.java,8\d\8d26236945c1d60333032467ce1576bcb68ea7ec

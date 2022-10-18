@@ -1,7 +1,7 @@
 package http;
 
 
-import manager.ManagerSaveException;
+import exception.ManagerSaveException;
 
 import java.io.IOException;
 import java.net.URI;
@@ -34,7 +34,7 @@ public class KVTaskClient {
             }
             return response.body();
         } catch (IOException | InterruptedException e) {
-            throw new ManagerSaveException("Что то пошло не так ");
+            throw new ManagerSaveException("Неполадки на сервере"+e.getMessage());
         }
     }
 
@@ -52,7 +52,7 @@ public class KVTaskClient {
                 System.out.println("Что-то пошло не так. Сервер вернул код состояния " + response.statusCode());
             }
         } catch (InterruptedException |IOException e) {
-            throw new ManagerSaveException("Что то пошло не так ");
+            throw new ManagerSaveException("Неполадки на сервере"+e.getMessage());
         }
     }
 
@@ -70,7 +70,7 @@ public class KVTaskClient {
             }
             return response.body();
         } catch (InterruptedException | IOException e) {
-            throw new ManagerSaveException("Что то пошло не так ");
+            throw new ManagerSaveException("Неполадки на сервере"+e.getMessage());
         }
     }
 }
